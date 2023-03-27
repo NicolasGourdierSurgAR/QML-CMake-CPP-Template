@@ -10,7 +10,7 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # External dependendencies
-find_package(Qt5 REQUIRED COMPONENTS Qml Quick Widgets)
+find_package(Qt5 REQUIRED COMPONENTS Qml Quick)
 if(Qt5_FOUND)
     message(STATUS "Qt found, version ${Qt5_VERSION}")
     message(STATUS "Qt dir ${Qt5_DIR} found.")

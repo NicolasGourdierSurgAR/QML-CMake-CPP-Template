@@ -17,7 +17,7 @@ set(SHOWCASE_LINKS
     Qt5::Core
     Qt5::Qml
     Qt5::Quick
-    Qt5::Widgets
+    Ui
 )
 
 # RESOURCES
