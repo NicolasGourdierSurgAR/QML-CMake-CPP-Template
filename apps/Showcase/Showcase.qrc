@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>Showcase.qml</file>
+        <file>Modern/Button.qml</file>
     </qresource>
 </RCC>

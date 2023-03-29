@@ -5,11 +5,13 @@ set(CMAKE_AUTORCC ON)
 
 # HEADERS
 set(SHOWCASE_HEADERS
+    Modern/ModernStyle.hpp
 )
 
 # SOURCES
 set(SHOWCASE_SOURCES
     Showcase.cpp
+    Modern/ModernStyle.cpp
 )
 
 # LINKS
@@ -17,6 +19,7 @@ set(SHOWCASE_LINKS
     Qt5::Core
     Qt5::Qml
     Qt5::Quick
+    Qt5::QuickControls2
     Ui
 )
 
