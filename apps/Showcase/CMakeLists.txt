@@ -10,8 +10,8 @@ set(SHOWCASE_HEADERS
 
 # SOURCES
 set(SHOWCASE_SOURCES
-    Showcase.cpp
     Modern/ModernStyle.cpp
+    Showcase.cpp
 )
 
 # LINKS

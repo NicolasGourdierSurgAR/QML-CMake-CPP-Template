@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>ReloadingWindow.qml</file>
+        <file>LiveReload.qml</file>
+    </qresource>
+</RCC>
