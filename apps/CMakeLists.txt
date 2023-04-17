@@ -1,2 +1,2 @@
 add_subdirectory(LiveReload)
-add_subdirectory(Showcase)
+add_subdirectory(CustomizableTheme)

@@ -24,10 +24,10 @@ int main(int argc, char* argv[])
     QQuickStyle::setFallbackStyle("Material");
 
     // Init the ressources of the UI lib
-    Q_INIT_RESOURCE(Ui);
+    //    Q_INIT_RESOURCE(Ui);
 
     // load main qml file
-    engine.load(QUrl(QLatin1String("qrc:/Showcase.qml")));
+    engine.load(QUrl(QLatin1String("qrc:/CustomizableTheme.qml")));
 
     return app.exec();
 }
