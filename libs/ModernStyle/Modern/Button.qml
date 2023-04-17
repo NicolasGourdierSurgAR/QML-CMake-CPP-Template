@@ -11,22 +11,24 @@ T.Button {
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                                  implicitContentHeight + topPadding + bottomPadding)
 
-    horizontalPadding: 40
-    verticalPadding: 15
+
+    horizontalPadding: ModernStyleSingleton.wScale(40)
+    verticalPadding: ModernStyleSingleton.hScale(15)
 
     text: "Custom Button"
 
     background: Rectangle {
-        implicitWidth: 100
-        implicitHeight: 40
+        implicitWidth: ModernStyleSingleton.wScale(100)
+        implicitHeight: ModernStyleSingleton.hScale(40)
         color: control.hovered ? Qt.darker("#4287f5",1.5) : "#4287f5"
-        radius: 8
+        radius: ModernStyleSingleton.mScale(8)
     }
 
     contentItem: Text {
         font {
             family: "Inter"
             styleName: "SemiBold"
+            pixelSize: ModernStyleSingleton.hScale(16)
             capitalization: Font.Capitalize
         }
         color: "white"
