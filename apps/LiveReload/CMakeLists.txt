@@ -22,7 +22,6 @@ set(LIVERELOAD_LINKS
     Qt5::Qml
     Qt5::Quick
     Qt5::QuickControls2
-    Ui
 )
 
 # RESOURCES
