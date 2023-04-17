@@ -1,5 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>ExampleWidget.qml</file>
+        <file>Modern/Button.qml</file>
     </qresource>
 </RCC>

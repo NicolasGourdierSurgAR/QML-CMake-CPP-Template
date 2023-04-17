@@ -1,9 +1,9 @@
-#include "Modern/ModernStyle.hpp"
-
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QQuickStyle>
+
+#include <Modern/ModernStyle.hpp>
 
 int main(int argc, char* argv[])
 {
@@ -19,12 +19,12 @@ int main(int argc, char* argv[])
     QQmlApplicationEngine engine;
     engine.addImportPath("qrc:/");
 
+    // Init the ressources of the UI lib
+    Q_INIT_RESOURCE(ModernStyle);
+
     // Set default style
     QQuickStyle::setStyle("Modern");
     QQuickStyle::setFallbackStyle("Material");
-
-    // Init the ressources of the UI lib
-    //    Q_INIT_RESOURCE(Ui);
 
     // load main qml file
     engine.load(QUrl(QLatin1String("qrc:/CustomizableTheme.qml")));

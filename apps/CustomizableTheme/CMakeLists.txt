@@ -5,12 +5,10 @@ set(CMAKE_AUTORCC ON)
 
 # HEADERS
 set(CUSTOMIZABLE_THEME_HEADERS
-    Modern/ModernStyle.hpp
 )
 
 # SOURCES
 set(CUSTOMIZABLE_THEME_SOURCES
-    Modern/ModernStyle.cpp
     CustomizableTheme.cpp
 )
 
@@ -20,6 +18,7 @@ set(CUSTOMIZABLE_THEME_LINKS
     Qt5::Qml
     Qt5::Quick
     Qt5::QuickControls2
+    ModernStyle
 )
 
 # RESOURCES

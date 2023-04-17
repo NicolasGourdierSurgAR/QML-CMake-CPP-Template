@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
         <file>CustomizableTheme.qml</file>
-        <file>Modern/Button.qml</file>
     </qresource>
 </RCC>
