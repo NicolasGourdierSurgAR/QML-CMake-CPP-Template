@@ -32,7 +32,7 @@ T.Button {
             capitalization: Font.Capitalize
         }
         color: "white"
-        text: control.text + " " + control.ModernStyle.elevation
+        text: control.text
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
     }
