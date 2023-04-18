@@ -130,10 +130,28 @@ ApplicationWindow {
 
         Button {
             text: "Button"
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+            }
+        }
+
+        Label {
+            text: "Some label"
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+            }
         }
 
         SpinBox {
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+            }
+        }
 
+        Slider {
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+            }
         }
     }
 }
