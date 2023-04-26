@@ -75,66 +75,17 @@ ApplicationWindow {
             centerIn: parent
         }
         spacing: 10
-        ModernStyle.elevation: 5
 
         Button {
-            text: "Button" + (ModernStyle.theme === ModernStyle.Dark ? "Dark" : "Light")
+            text: "Some Button"
             anchors {
                 horizontalCenter: parent.horizontalCenter
             }
-
-//            onClicked: popupTest.open()
-            onClicked: repeater.model++
         }
 
         Label {
-            text: ModernStyle.elevation
-        }
-
-        Repeater {
-            id: repeater
-            model: 2
-
-            Label {
-                id: label
-                text: ModernStyle.elevation
-            }
-        }
-
-//        Popup {
-//            id: popupTest
-
-////            ModernStyle.elevation: 8
-//            objectName: "BellePopup"
-//            height: 100
-//            width: 100
-//            Rectangle {
-//                objectName: "popupRectangle"
-//                anchors.fill: parent
-//                color: "red"
-//                Button {
-//                    objectName: "label"
-//                    anchors.centerIn: parent
-//                    text: ModernStyle.elevation
-//                    onClicked: test.show()
-//                }
-//            }
-//            Window {
-//                id: test
-//                objectName: "popup 3"
-////                ModernStyle.elevation: 111
-//                Label {
-//                    objectName: "labelPopup3"
-//                    text: ModernStyle.elevation
-//                }
-//            }
-//        }
-
-        Label {
-            text: "Elevation: " + ModernStyle.elevation
-            anchors {
-                horizontalCenter: parent.horizontalCenter
-            }
+            id: label
+            text: "Some label"
         }
 
         SpinBox {

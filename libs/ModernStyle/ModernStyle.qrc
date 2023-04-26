@@ -1,6 +1,8 @@
 <RCC>
     <qresource prefix="/">
-        <file>Modern/Button.qml</file>
+        <file>Modern/ApplicationWindow.qml</file>
+<!--        <file>Modern/Button.qml</file>-->
+        <file>Modern/Page.qml</file>
         <file>Modern/ModernStyleSingleton.qml</file>
         <file>Modern/qmldir</file>
     </qresource>

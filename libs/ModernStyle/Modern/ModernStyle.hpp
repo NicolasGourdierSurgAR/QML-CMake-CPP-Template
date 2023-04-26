@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QColor>
 #include <QObject>
 #include <QQuickItem>
 #include <QQuickWindow>
@@ -9,7 +10,8 @@ class ModernStyle : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(Theme theme READ theme WRITE setTheme RESET resetTheme NOTIFY themeChanged)
-    Q_PROPERTY(int elevation READ elevation WRITE setElevation NOTIFY elevationChanged)
+
+    Q_PROPERTY(QColor backgroundColor READ backgroundColor NOTIFY backgroundColorChanged)
 
   public:
     enum Theme
@@ -32,14 +34,11 @@ class ModernStyle : public QObject
     void resetTheme();
     void themeChange();
 
-    int elevation() const;
-    void setElevation(int elevation);
-    void propagateElevation();
-    void inheritPrimary(int elevation);
+    QColor backgroundColor() const;
 
   signals:
     void themeChanged();
-    void elevationChanged();
+    void backgroundColorChanged();
 
   private:
     QList<QObject*> findAttachedChildren(QObject* parent);
@@ -51,8 +50,9 @@ class ModernStyle : public QObject
     Theme m_theme{Light};
     bool m_explicitTheme{false};
 
-    int m_elevation;
-    bool m_explicitElevation{false};
+    QColor m_backgroundColor{};
+    bool m_explicitBackgroundColor{false};
+
     QList<ModernStyle*> m_attachedChildrens;
 };
 

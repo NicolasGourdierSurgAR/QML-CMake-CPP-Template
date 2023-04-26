@@ -1,10 +1,11 @@
 ﻿#include "ModernStyle.hpp"
 
-static ModernStyle::Theme globalTheme = ModernStyle::Light;
+static const ModernStyle::Theme s_globalTheme = ModernStyle::Light;
+static const QRgb s_backgroundColorLight = 0xFFFAFAFA;
+static const QRgb s_backgroundColorDark = 0xFF303030;
 
 ModernStyle::ModernStyle(QObject* parent)
   : QObject(parent)
-  , m_elevation(0)
 {
     // Init attached childrens
     updateAttachedChildrens();
@@ -52,7 +53,7 @@ void ModernStyle::propagateTheme()
 {
     for(auto attachedChild : m_attachedChildrens)
     {
-        attachedChild->inheritPrimary(m_theme);
+        attachedChild->inheritTheme(m_theme);
     }
 }
 
@@ -63,42 +64,18 @@ void ModernStyle::resetTheme()
         return;
     }
     ModernStyle* modernStyleParent = attachedParent();
-    inheritTheme(modernStyleParent ? modernStyleParent->theme() : globalTheme);
+    inheritTheme(modernStyleParent ? modernStyleParent->theme() : s_globalTheme);
 }
 
-void ModernStyle::themeChange() { emit themeChanged(); }
-
-int ModernStyle::elevation() const { return m_elevation; }
-
-void ModernStyle::setElevation(int elevation)
+void ModernStyle::themeChange()
 {
-    m_explicitElevation = true;
-    if(elevation == m_elevation)
-    {
-        return;
-    }
-    m_elevation = elevation;
-    propagateElevation();
-    emit elevationChanged();
+    emit themeChanged();
+    emit backgroundColorChanged();
 }
 
-void ModernStyle::propagateElevation()
+QColor ModernStyle::backgroundColor() const
 {
-    for(auto attachedChildren : m_attachedChildrens)
-    {
-        attachedChildren->inheritPrimary(m_elevation);
-    }
-}
-
-void ModernStyle::inheritPrimary(int elevation)
-{
-    if(m_explicitElevation || m_elevation == elevation)
-    {
-        return;
-    }
-    m_elevation = elevation;
-    propagateElevation();
-    emit elevationChanged();
+    return QColor::fromRgba(m_theme == Light ? s_backgroundColorLight : s_backgroundColorDark);
 }
 
 void ModernStyle::updateAttachedChildrens()
@@ -245,4 +222,4 @@ ModernStyle* ModernStyle::attachedParent()
     return nullptr;
 }
 
-void ModernStyle::propagateProperties() { propagateElevation(); }
+void ModernStyle::propagateProperties() { propagateTheme(); }
