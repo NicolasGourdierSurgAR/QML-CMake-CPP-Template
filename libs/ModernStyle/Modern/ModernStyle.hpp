@@ -18,7 +18,7 @@ class ModernStyle : public QObject
         Dark
     };
 
-    // Q_ENUM(Theme)
+    Q_ENUM(Theme)
 
     explicit ModernStyle(QObject* parent = nullptr);
     ~ModernStyle();
