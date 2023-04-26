@@ -9,6 +9,8 @@ int main(int argc, char* argv[])
 {
     // create the gui app
     QGuiApplication app(argc, argv);
+    QGuiApplication::setOrganizationName("SomeOrganization");
+    QGuiApplication::setOrganizationDomain("SomeDomain");
     QGuiApplication::setApplicationName("Showcase");
 
     QLocale::setDefault(QLocale::English);
