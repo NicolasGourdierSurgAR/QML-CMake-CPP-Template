@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>CustomizableTheme.qml</file>
+        <file>SettingsPage.qml</file>
     </qresource>
 </RCC>
