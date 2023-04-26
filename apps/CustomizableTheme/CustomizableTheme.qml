@@ -29,7 +29,7 @@ ApplicationWindow {
     }
 
     menuBar: RowLayout {
-        layoutDirection: Qt.RightToLeft
+    layoutDirection: Qt.RightToLeft
 
         Button {
             Layout.margins: 5
@@ -41,102 +41,97 @@ ApplicationWindow {
         }
     }
 
+    Rectangle {
+        anchors {
+            left: parent.left
+            right: parent.right
+            top: parent.top
+        }
+        height: 1
+        color: "black"
+    }
+
     Window {
         id: settings
 
-        height: 400
-        width: 550
+        objectName: "settings"
+        width: 800
+        height: 500
 
-        ColumnLayout {
-            anchors {
-                margins: 5
-                fill: parent
-            }
+        SettingsPage {
+            id: settingsPage
 
-            Row {
-                spacing: 5
-                Text {
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: "Scale to screen size:"
-                }
+            anchors.fill: parent
 
-                CheckBox {
-                    id: checkBoxSTSZ
-                    anchors.verticalCenter: parent.verticalCenter
-                    checkState: Qt.Checked
-                    Component.onCompleted: {
-                        ModernStyleSingleton.scaleToScreenSize = Qt.binding(function() {
-                            return checkBoxSTSZ.checkState === Qt.Checked;
-                        });
-                    }
-                }
-            }
-
-            Row {
-                spacing: 5
-                Text {
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: "Size scale:"
-                }
-
-                SpinBox {
-                    id: spinBoxSizeScale
-
-                    from: 50
-                    to: 400
-                    value: 100
-                    property int decimals: 2
-                    property real realValue: value / 100
-
-                    Component.onCompleted: {
-                        ModernStyleSingleton.sizeScale = Qt.binding(function() {
-                            return spinBoxSizeScale.value / 100;
-                        });
-                    }
-
-                    validator: DoubleValidator {
-                        bottom: Math.min(spinBoxSizeScale.from, spinBoxSizeScale.to)
-                        top: Math.max(spinBoxSizeScale.from, spinBoxSizeScale.to)
-                    }
-
-                    textFromValue: function(value, locale) {
-                        return Number(value / 100).toLocaleString(locale, 'f', spinBoxSizeScale.decimals);
-                    }
-
-                    valueFromText: function(text, locale) {
-                        return Number.fromLocaleString(locale, text) * 100
-                    }
-                }
-            }
-
-            Item {
-                Layout.fillHeight: true
-            }
-
-            Button {
-                text: "Close"
-                Layout.alignment: Qt.AlignRight
-                onClicked: settings.close();
-            }
+            onThemeChanged: root.ModernStyle.theme = theme;
         }
     }
 
     Column {
+        id: column
+
         anchors {
             margins: 5
             centerIn: parent
         }
         spacing: 10
+        ModernStyle.elevation: 5
 
         Button {
-            text: "Button"
+            text: "Button" + (ModernStyle.theme === ModernStyle.Dark ? "Dark" : "Light")
             anchors {
                 horizontalCenter: parent.horizontalCenter
             }
+
+//            onClicked: popupTest.open()
+            onClicked: repeater.model++
         }
 
         Label {
-            text: "Some label"
+            text: ModernStyle.elevation
+        }
+
+        Repeater {
+            id: repeater
+            model: 2
+
+            Label {
+                id: label
+                text: ModernStyle.elevation
+            }
+        }
+
+//        Popup {
+//            id: popupTest
+
+////            ModernStyle.elevation: 8
+//            objectName: "BellePopup"
+//            height: 100
+//            width: 100
+//            Rectangle {
+//                objectName: "popupRectangle"
+//                anchors.fill: parent
+//                color: "red"
+//                Button {
+//                    objectName: "label"
+//                    anchors.centerIn: parent
+//                    text: ModernStyle.elevation
+//                    onClicked: test.show()
+//                }
+//            }
+//            Window {
+//                id: test
+//                objectName: "popup 3"
+////                ModernStyle.elevation: 111
+//                Label {
+//                    objectName: "labelPopup3"
+//                    text: ModernStyle.elevation
+//                }
+//            }
+//        }
+
+        Label {
+            text: "Elevation: " + ModernStyle.elevation
             anchors {
                 horizontalCenter: parent.horizontalCenter
             }
