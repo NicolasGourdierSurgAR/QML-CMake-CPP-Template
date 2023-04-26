@@ -17,6 +17,7 @@ Page {
 
         property alias scaleToScreenSize: checkBoxSTSZ.checkState
         property alias sizeScale: spinBoxSizeScale.value
+        property alias theme: comboBoxTheme.currentIndex
     }
 
     TabBar {
@@ -130,7 +131,7 @@ Page {
                     }
 
                     ComboBox {
-                        id: comboBox
+                        id: comboBoxTheme
 
                         anchors.verticalCenter: parent.verticalCenter
                         model: ["Light","Dark"]
