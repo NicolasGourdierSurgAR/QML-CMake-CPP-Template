@@ -1,8 +1,12 @@
 ﻿#include "ModernStyle.hpp"
 
 static const ModernStyle::Theme s_globalTheme = ModernStyle::Light;
-static const QRgb s_backgroundColorLight = 0xFFFAFAFA;
-static const QRgb s_backgroundColorDark = 0xFF303030;
+static const QRgb s_primaryColorDark = 0xFF5C5C5C;
+static const QRgb s_primaryColorLight = 0xFF3B3B3B;
+static const QRgb s_accentColorDark = 0xFFF49C1C;
+static const QRgb s_accentColorLight = 0xFF5F83C1;
+static const QRgb s_backgroundColorLight = 0xFFB2B2B2;
+static const QRgb s_backgroundColorDark = 0xFF484848;
 
 ModernStyle::ModernStyle(QObject* parent)
   : QObject(parent)
@@ -36,6 +40,14 @@ void ModernStyle::setTheme(Theme theme)
     m_theme = theme;
     propagateTheme();
     themeChange();
+    if(!m_explicitPrimaryColor)
+    {
+        primaryColorChange();
+    }
+    if(!m_explicitAccentColor)
+    {
+        accentColorChange();
+    }
 }
 
 void ModernStyle::inheritTheme(Theme theme)
@@ -47,6 +59,14 @@ void ModernStyle::inheritTheme(Theme theme)
     m_theme = theme;
     propagateTheme();
     themeChange();
+    if(!m_customPrimaryColor)
+    {
+        primaryColorChange();
+    }
+    if(!m_customAccentColor)
+    {
+        accentColorChange();
+    }
 }
 
 void ModernStyle::propagateTheme()
@@ -63,6 +83,7 @@ void ModernStyle::resetTheme()
     {
         return;
     }
+    m_explicitTheme = false;
     ModernStyle* modernStyleParent = attachedParent();
     inheritTheme(modernStyleParent ? modernStyleParent->theme() : s_globalTheme);
 }
@@ -72,6 +93,128 @@ void ModernStyle::themeChange()
     emit themeChanged();
     emit backgroundColorChanged();
 }
+
+QColor ModernStyle::primaryColor() const
+{
+    if(m_customPrimaryColor)
+    {
+        return m_primaryColor;
+    }
+    return (m_theme == Dark) ? s_primaryColorDark : s_primaryColorLight;
+}
+
+void ModernStyle::setPrimaryColor(QColor primaryColor)
+{
+    m_explicitPrimaryColor = true;
+    m_customAccentColor = true;
+    if(m_primaryColor == primaryColor)
+    {
+        return;
+    }
+    m_primaryColor = primaryColor;
+    propagatePrimaryColor();
+    primaryColorChange();
+}
+
+void ModernStyle::inheritPrimaryColor(QColor primaryColor, bool custom)
+{
+    if(m_explicitPrimaryColor || m_primaryColor == primaryColor)
+    {
+        return;
+    }
+    m_customAccentColor = true;
+    m_primaryColor = primaryColor;
+    propagatePrimaryColor();
+    primaryColorChange();
+}
+
+void ModernStyle::propagatePrimaryColor()
+{
+    for(auto attachedChild : m_attachedChildrens)
+    {
+        attachedChild->inheritPrimaryColor(m_primaryColor, m_customPrimaryColor);
+    }
+}
+
+void ModernStyle::resetPrimaryColor()
+{
+    if(!m_explicitPrimaryColor)
+    {
+        return;
+    }
+    m_explicitPrimaryColor = false;
+    m_customPrimaryColor = false;
+    ModernStyle* modernStyleParent = attachedParent();
+    if(modernStyleParent)
+    {
+        inheritPrimaryColor(modernStyleParent->primaryColor(), modernStyleParent->m_customPrimaryColor);
+        return;
+    }
+    inheritPrimaryColor(primaryColor(), m_customPrimaryColor);
+}
+
+void ModernStyle::primaryColorChange() { emit primaryColorChanged(); }
+
+QColor ModernStyle::accentColor() const
+{
+    if(m_customAccentColor)
+    {
+        return m_accentColor;
+    }
+    return (m_theme == Dark) ? s_accentColorDark : s_accentColorLight;
+}
+
+void ModernStyle::setAccentColor(QColor accentColor)
+{
+    m_explicitAccentColor = true;
+    m_customAccentColor = true;
+    if(m_accentColor == accentColor)
+    {
+        return;
+    }
+    m_accentColor = accentColor;
+    propagateAccentColor();
+    accentColorChange();
+}
+
+void ModernStyle::inheritAccentColor(QColor accentColor, bool custom)
+{
+    if(m_explicitAccentColor || m_accentColor == accentColor)
+    {
+        return;
+    }
+    m_accentColor = accentColor;
+    m_customAccentColor = custom;
+    propagateAccentColor();
+    accentColorChange();
+}
+
+void ModernStyle::propagateAccentColor()
+{
+    for(auto attachedChild : m_attachedChildrens)
+    {
+        attachedChild->inheritAccentColor(m_accentColor, m_customAccentColor);
+    }
+}
+
+void ModernStyle::resetAccentColor()
+{
+    if(!m_explicitAccentColor)
+    {
+        return;
+    }
+    m_explicitAccentColor = false;
+    m_customAccentColor = false;
+    ModernStyle* modernStyleParent = attachedParent();
+    if(modernStyleParent)
+    {
+        inheritPrimaryColor(modernStyleParent->accentColor(), modernStyleParent->m_customAccentColor);
+        return;
+    }
+    inheritAccentColor(accentColor(), m_customAccentColor);
+}
+
+void ModernStyle::accentColorChange() { emit accentColorChanged(); }
 
 QColor ModernStyle::backgroundColor() const
 {
