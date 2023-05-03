@@ -153,7 +153,12 @@ void ModernStyle::resetPrimaryColor()
     inheritPrimaryColor(primaryColor(), m_customPrimaryColor);
 }
 
-void ModernStyle::primaryColorChange() { emit primaryColorChanged(); }
+void ModernStyle::primaryColorChange()
+{
+    emit primaryColorChanged();
+    emit buttonColorChanged();
+    emit buttonDisabledColorChanged();
+}
 
 QColor ModernStyle::accentColor() const
 {
@@ -214,11 +219,93 @@ void ModernStyle::resetAccentColor()
     inheritAccentColor(accentColor(), m_customAccentColor);
 }
 
-void ModernStyle::accentColorChange() { emit accentColorChanged(); }
+void ModernStyle::accentColorChange()
+{
+    emit accentColorChanged();
+    emit hoveredButtonColorChanged();
+}
+
+bool ModernStyle::highlighted() const { return m_highlighted; }
+
+void ModernStyle::setHighlighted(bool highlighted)
+{
+    m_explicitHighlighted = true;
+    if(highlighted == m_highlighted)
+    {
+        return;
+    }
+    m_highlighted = highlighted;
+    propagateHighlighted();
+    highlightedChange();
+}
+
+void ModernStyle::inheritHighlighted(bool highlighted)
+{
+    if(m_explicitHighlighted || m_explicitHighlighted == highlighted)
+    {
+        return;
+    }
+    m_explicitHighlighted = highlighted;
+    propagateHighlighted();
+    highlightedChange();
+}
+
+void ModernStyle::propagateHighlighted()
+{
+    for(auto attachedChild : m_attachedChildrens)
+    {
+        attachedChild->inheritHighlighted(m_highlighted);
+    }
+}
+
+void ModernStyle::resetHighlighted()
+{
+    if(!m_explicitHighlighted)
+    {
+        return;
+    }
+    m_explicitHighlighted = false;
+    ModernStyle* modernStyleParent = attachedParent();
+    inheritHighlighted(modernStyleParent ? modernStyleParent->highlighted() : false);
+}
+
+void ModernStyle::highlightedChange()
+{
+    emit highlightedChanged();
+    emit buttonColorChanged();
+}
 
 QColor ModernStyle::backgroundColor() const
 {
     return QColor::fromRgba(m_theme == Light ? s_backgroundColorLight : s_backgroundColorDark);
+}
+
+QColor ModernStyle::buttonColor() const { return m_highlighted ? accentColor() : primaryColor(); }
+
+QColor ModernStyle::buttonDisabledColor() const
+{
+    QColor normal = primaryColor();
+    if(m_theme == Dark)
+    {
+        return normal.darker(200);
+    }
+    else
+    {
+        return normal.lighter(200);
+    }
+}
+
+QColor ModernStyle::hoveredButtonColor() const
+{
+    QColor normal = buttonColor();
+    if(m_theme == Dark)
+    {
+        return normal.lighter(150);
+    }
+    else
+    {
+        return normal.darker(150);
+    }
 }
 
 void ModernStyle::updateAttachedChildrens()

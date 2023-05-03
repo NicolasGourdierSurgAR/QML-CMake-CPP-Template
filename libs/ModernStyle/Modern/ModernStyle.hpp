@@ -14,8 +14,12 @@ class ModernStyle : public QObject
       QColor primaryColor READ primaryColor WRITE setPrimaryColor RESET resetPrimaryColor NOTIFY primaryColorChanged)
     Q_PROPERTY(
       QColor accentColor READ accentColor WRITE setAccentColor RESET resetAccentColor NOTIFY accentColorChanged)
+    Q_PROPERTY(bool highlighted READ highlighted WRITE setHighlighted RESET resetHighlighted NOTIFY highlightedChanged)
 
     Q_PROPERTY(QColor backgroundColor READ backgroundColor NOTIFY backgroundColorChanged)
+    Q_PROPERTY(QColor buttonColor READ buttonColor NOTIFY buttonColorChanged)
+    Q_PROPERTY(QColor buttonDisabledColor READ buttonDisabledColor NOTIFY buttonDisabledColorChanged)
+    Q_PROPERTY(QColor hoveredButtonColor READ hoveredButtonColor NOTIFY hoveredButtonColorChanged)
 
   public:
     enum Theme
@@ -52,13 +56,27 @@ class ModernStyle : public QObject
     void resetAccentColor();
     void accentColorChange();
 
+    bool highlighted() const;
+    void setHighlighted(bool highlighted);
+    void inheritHighlighted(bool highlighted);
+    void propagateHighlighted();
+    void resetHighlighted();
+    void highlightedChange();
+
     QColor backgroundColor() const;
+    QColor buttonColor() const;
+    QColor buttonDisabledColor() const;
+    QColor hoveredButtonColor() const;
 
   signals:
     void themeChanged();
     void primaryColorChanged();
     void accentColorChanged();
+    void highlightedChanged();
     void backgroundColorChanged();
+    void buttonColorChanged();
+    void buttonDisabledColorChanged();
+    void hoveredButtonColorChanged();
 
   private:
     QList<QObject*> findAttachedChildren(QObject* parent);
@@ -77,6 +95,9 @@ class ModernStyle : public QObject
     QColor m_accentColor{};
     bool m_explicitAccentColor{false};
     bool m_customAccentColor{false};
+
+    bool m_highlighted{false};
+    bool m_explicitHighlighted{false};
 
     QColor m_backgroundColor{};
 

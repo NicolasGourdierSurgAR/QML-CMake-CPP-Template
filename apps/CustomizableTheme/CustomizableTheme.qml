@@ -70,6 +70,8 @@ ApplicationWindow {
     Column {
         id: column
 
+        ModernStyle.accentColor: "orange"
+
         anchors {
             margins: 5
             centerIn: parent
@@ -81,6 +83,16 @@ ApplicationWindow {
             anchors {
                 horizontalCenter: parent.horizontalCenter
             }
+        }
+
+        Button {
+            enabled: false
+            text: "Some Disabled Button"
+        }
+
+        Button {
+            highlighted: true
+            text: "Some Highlighted Button"
         }
 
         Label {

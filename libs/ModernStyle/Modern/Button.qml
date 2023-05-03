@@ -15,12 +15,14 @@ T.Button {
     horizontalPadding: ModernStyleSingleton.wScale(40)
     verticalPadding: ModernStyleSingleton.hScale(15)
 
-    text: "Custom Button"
+    ModernStyle.highlighted: control.highlighted
 
     background: Rectangle {
         implicitWidth: ModernStyleSingleton.wScale(100)
         implicitHeight: ModernStyleSingleton.hScale(40)
-        color: control.hovered ? Qt.darker("#4287f5",1.5) : "#4287f5"
+        color: !control.enabled ? control.ModernStyle.buttonDisabledColor :
+                control.hovered ? control.ModernStyle.hoveredButtonColor :
+                control.ModernStyle.buttonColor
         radius: ModernStyleSingleton.mScale(8)
     }
 
